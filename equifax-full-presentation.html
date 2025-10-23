@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Equifax Australia Value Creation Strategy - Full Presentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    * { box-sizing: border-box; }
+    body, html {
+        margin: 0; padding: 0;
+        font-family: 'Montserrat', sans-serif;
+        background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+        overflow: hidden;
+        height: 100vh;
+    }
+    .presentation-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        padding: 20px;
+    }
+    .slide-wrapper {
+        position: relative;
+        width: 1280px;
+        height: 720px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+        margin-bottom: 20px;
+        border-radius: 5px;
+        overflow: hidden;
+        background: white;
+    }
+    .slide-frame {
+        width: 100%;
+        height: 100%;
+        border: none;
+        display: block;
+    }
+    .navigation {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 1280px;
+        padding: 15px 0;
+    }
+    .nav-button {
+        background: linear-gradient(135deg, #C41E3A 0%, #A91B32 100%);
+        color: white;
+        border: none;
+        padding: 12px 28px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        border-radius: 25px;
+        transition: all 0.3s;
+        font-family: 'Montserrat', sans-serif;
+        box-shadow: 0 4px 15px rgba(196, 30, 58, 0.3);
+    }
+    .nav-button:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(196, 30, 58, 0.4);
+    }
+    .nav-button:disabled {
+        background: #666;
+        cursor: not-allowed;
+        opacity: 0.5;
+    }
+    .slide-counter {
+        color: white;
+        font-size: 18px;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+    .menu-button {
+        background: linear-gradient(135deg, #4A6B83 0%, #3A5B73 100%);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 14px;
+        cursor: pointer;
+        border-radius: 20px;
+        transition: all 0.3s;
+        font-family: 'Montserrat', sans-serif;
+    }
+    .menu-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(74, 107, 131, 0.4);
+    }
+    .slide-menu {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 20px 80px rgba(0,0,0,0.8);
+        max-width: 900px;
+        max-height: 85vh;
+        overflow-y: auto;
+        z-index: 1000;
+        padding: 40px;
+    }
+    .slide-menu.active { display: block; animation: slideIn 0.3s; }
+    @keyframes slideIn {
+        from { opacity: 0; transform: translate(-50%, -45%); }
+        to { opacity: 1; transform: translate(-50%, -50%); }
+    }
+    .menu-overlay {
+        display: none;
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0,0,0,0.8);
+        z-index: 999;
+    }
+    .menu-overlay.active { display: block; }
+    .menu-title {
+        font-size: 28px;
+        font-weight: 700;
+        color: #2D2D2D;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 3px solid #C41E3A;
+    }
+    .menu-item {
+        padding: 15px 20px;
+        margin-bottom: 10px;
+        cursor: pointer;
+        border-radius: 8px;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        border-left: 3px solid transparent;
+    }
+    .menu-item:hover {
+        background: #F5F5F5;
+        border-left-color: #C41E3A;
+        transform: translateX(5px);
+    }
+    .menu-item-number {
+        font-weight: 700;
+        color: #C41E3A;
+        margin-right: 15px;
+        min-width: 35px;
+        font-size: 18px;
+    }
+    .menu-item-title {
+        font-size: 16px;
+        color: #2D2D2D;
+    }
+    .close-menu {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: none;
+        border: none;
+        font-size: 32px;
+        cursor: pointer;
+        color: #999;
+        transition: all 0.3s;
+    }
+    .close-menu:hover {
+        color: #C41E3A;
+        transform: rotate(90deg);
+    }
+    .keyboard-hint {
+        color: #999;
+        font-size: 13px;
+        text-align: center;
+        margin-top: 10px;
+        font-style: italic;
+    }
+    .progress-bar {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #C41E3A, #E63946);
+        transition: width 0.3s ease;
+    }
+</style>
+</head>
+<body>
+
+<div class="presentation-container">
+    <div class="slide-wrapper">
+        <iframe id="slideFrame" class="slide-frame"></iframe>
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="navigation">
+        <button class="nav-button" id="prevBtn" onclick="changeSlide(-1)">
+            <i class="fas fa-chevron-left"></i> Previous
+        </button>
+
+        <div class="slide-counter">
+            <button class="menu-button" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i> Slide Menu
+            </button>
+            <span>Slide <span id="currentSlide">1</span> of <span id="totalSlides">21</span></span>
+        </div>
+
+        <button class="nav-button" id="nextBtn" onclick="changeSlide(1)">
+            Next <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
+
+    <p class="keyboard-hint">
+        <i class="fas fa-keyboard"></i> Arrow keys to navigate |
+        <i class="fas fa-bars"></i> M for menu |
+        <i class="fas fa-expand"></i> F for fullscreen |
+        <i class="fas fa-home"></i> Home/End to jump
+    </p>
+</div>
+
+<div class="menu-overlay" id="menuOverlay" onclick="toggleMenu()"></div>
+<div class="slide-menu" id="slideMenu">
+    <button class="close-menu" onclick="toggleMenu()">×</button>
+    <h2 class="menu-title"><i class="fas fa-presentation"></i> Presentation Navigation</h2>
+    <div id="menuItems"></div>
+</div>
+
+<script>
+const slideData = [
+    { num: 1, title: "Title Slide - Equifax Australia Value Creation Strategy" },
+    { num: 2, title: "Executive Summary" },
+    { num: 3, title: "Company Overview" },
+    { num: 4, title: "Industry & Competitive Context" },
+    { num: 5, title: "Strategic Challenge – Value-Based Positioning" },
+    { num: 6, title: "Business Model Pattern Framework" },
+    { num: 7, title: "Value Creation Patterns – Detailed" },
+    { num: 8, title: "WTP Formula Introduction" },
+    { num: 9, title: "Operational Quantification – Variables & Scoring" },
+    { num: 10, title: "WTP Scenario Analysis – Tiers" },
+    { num: 11, title: "Competitive Benchmarking Framework" },
+    { num: 12, title: "Benchmark Insights – Variable-by-Variable" },
+    { num: 13, title: "Strategic Implications" },
+    { num: 14, title: "Implementation Roadmap Overview (Q1–Q4)" },
+    { num: 15, title: "Operational Levers – Bundling & Integration" },
+    { num: 16, title: "Operational Levers – Compliance & Trust" },
+    { num: 17, title: "Control Points & KPI Dashboard" },
+    { num: 18, title: "Risk Management Framework" },
+    { num: 19, title: "WTP Variable Tracking Template" },
+    { num: 20, title: "Key Recommendations" },
+    { num: 21, title: "Next Steps & Closing" }
+];
+
+let currentSlideIndex = 1;
+const totalSlides = 21;
+
+// Slide names for iframe loading
+const slideFiles = {
+    1: 'slides/slide-1-title.html',
+    2: 'slides/slide-2-executive-summary.html',
+    3: 'slides/slide-3-company-overview.html',
+    4: 'slides/slide-4-industry-competitive.html',
+    5: 'slides/slide-5-strategic-challenge.html',
+    6: 'slides/slide-6-business-model.html',
+    7: 'slides/slide-7-value-creation.html',
+    8: 'slides/slide-8-wtp-formula.html',
+    9: 'slides/slide-9-operational-quantification.html',
+    10: 'slides/slide-10-wtp-scenario.html',
+    11: 'slides/slide-11-competitive-benchmarking.html',
+    12: 'slides/slide-12-benchmark-insights.html',
+    13: 'slides/slide-13-strategic-implications.html',
+    14: 'slides/slide-14-implementation-roadmap.html',
+    15: 'slides/slide-15-operational-levers-bundling.html',
+    16: 'slides/slide-16-operational-levers-compliance.html',
+    17: 'slides/slide-17-kpi-dashboard.html',
+    18: 'slides/slide-18-risk-management.html',
+    19: 'slides/slide-19-wtp-tracking.html',
+    20: 'slides/slide-20-recommendations.html',
+    21: 'slides/slide-21-next-steps.html'
+};
+
+function initPresentation() {
+    document.getElementById('totalSlides').textContent = totalSlides;
+    generateMenu();
+    showInstructionSlide();
+    updateNavigation();
+    updateProgress();
+}
+
+function showInstructionSlide() {
+    const frame = document.getElementById('slideFrame');
+    const instructions = `
+        <!DOCTYPE html>
+        <html><head>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+        <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+        <style>
+            body { margin: 0; padding: 0; font-family: 'Montserrat', sans-serif; background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%); }
+            .container { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; padding: 60px; text-align: center; }
+            .icon { font-size: 100px; color: #C41E3A; margin-bottom: 30px; animation: pulse 2s infinite; }
+            @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+            h1 { color: #2D2D2D; font-size: 48px; margin-bottom: 15px; font-weight: 700; }
+            h2 { color: #666; font-size: 32px; margin-bottom: 40px; font-weight: 400; }
+            .info-box { background: white; padding: 35px; border-radius: 15px; border-left: 5px solid #C41E3A; box-shadow: 0 10px 40px rgba(0,0,0,0.1); max-width: 800px; margin: 0 auto; }
+            .info-box p { font-size: 20px; line-height: 1.8; color: #444; margin: 0; }
+            .features { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 40px; }
+            .feature { background: #f8f9fa; padding: 20px 30px; border-radius: 10px; border-top: 3px solid #C41E3A; min-width: 200px; }
+            .feature i { color: #C41E3A; font-size: 24px; margin-bottom: 10px; }
+            .feature strong { display: block; font-size: 16px; margin-bottom: 5px; color: #2D2D2D; }
+            .feature span { font-size: 14px; color: #666; }
+            .start-btn { background: linear-gradient(135deg, #C41E3A 0%, #A91B32 100%); color: white; border: none; padding: 18px 40px; font-size: 20px; font-weight: 600; cursor: pointer; border-radius: 30px; margin-top: 40px; box-shadow: 0 8px 25px rgba(196, 30, 58, 0.3); transition: all 0.3s; }
+            .start-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(196, 30, 58, 0.4); }
+        </style>
+        </head><body>
+        <div class="container">
+            <i class="fas fa-presentation icon"></i>
+            <h1>Equifax Australia</h1>
+            <h2>Value Creation Strategy Presentation</h2>
+            <div class="info-box">
+                <p><strong style="color: #C41E3A;">Interactive Presentation System</strong><br/><br/>
+                Navigate through 21 comprehensive slides covering Equifax Australia's value creation strategy, including market analysis, WTP modeling, competitive benchmarking, and implementation roadmap.</p>
+            </div>
+            <div class="features">
+                <div class="feature">
+                    <i class="fas fa-keyboard"></i>
+                    <strong>Keyboard Navigation</strong>
+                    <span>Arrow keys to move</span>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-list"></i>
+                    <strong>Quick Menu</strong>
+                    <span>Press M for slide menu</span>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-expand"></i>
+                    <strong>Fullscreen</strong>
+                    <span>Press F to expand</span>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-chart-bar"></i>
+                    <strong>Interactive Charts</strong>
+                    <span>Dynamic visualizations</span>
+                </div>
+            </div>
+            <button class="start-btn" onclick="parent.changeSlide(1)">
+                <i class="fas fa-play"></i> Start Presentation
+            </button>
+        </div>
+        </body></html>
+    `;
+    frame.srcdoc = instructions;
+}
+
+function generateMenu() {
+    const menuItems = document.getElementById('menuItems');
+    slideData.forEach(slide => {
+        const item = document.createElement('div');
+        item.className = 'menu-item';
+        item.onclick = () => goToSlide(slide.num);
+        item.innerHTML = `
+            <span class="menu-item-number">${slide.num}</span>
+            <span class="menu-item-title">${slide.title}</span>
+        `;
+        menuItems.appendChild(item);
+    });
+}
+
+function changeSlide(direction) {
+    const newSlide = currentSlideIndex + direction;
+    if (newSlide >= 1 && newSlide <= totalSlides) {
+        currentSlideIndex = newSlide;
+        loadSlide(currentSlideIndex);
+        updateNavigation();
+        updateProgress();
+    }
+}
+
+function goToSlide(slideNum) {
+    if (slideNum >= 1 && slideNum <= totalSlides) {
+        currentSlideIndex = slideNum;
+        loadSlide(currentSlideIndex);
+        updateNavigation();
+        updateProgress();
+        toggleMenu();
+    }
+}
+
+function loadSlide(slideNum) {
+    const frame = document.getElementById('slideFrame');
+
+    // Display message that slide would load here
+    const slideContent = `
+        <!DOCTYPE html>
+        <html><head>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+        <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+        <style>
+            body { margin: 0; padding: 0; font-family: 'Montserrat', sans-serif; background: white; }
+            .slide-preview { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; padding: 80px; }
+            .slide-number { font-size: 120px; font-weight: 700; color: #f0f0f0; margin-bottom: 20px; }
+            h1 { color: #2D2D2D; font-size: 42px; margin-bottom: 20px; font-weight: 700; text-align: center; }
+            h2 { color: #C41E3A; font-size: 32px; margin-bottom: 40px; font-weight: 600; text-align: center; }
+            .content-box { background: #F5F5F5; padding: 40px; border-radius: 12px; border-left: 5px solid #C41E3A; max-width: 900px; text-align: left; }
+            .content-box p { font-size: 18px; line-height: 1.7; color: #555; margin-bottom: 15px; }
+            .note { background: #FFF3CD; border-left: 4px solid #FFC107; padding: 20px; margin-top: 30px; border-radius: 5px; }
+            .note strong { color: #856404; }
+        </style>
+        </head><body>
+        <div class="slide-preview">
+            <div class="slide-number">${slideNum}</div>
+            <h1>Slide ${slideNum} of ${totalSlides}</h1>
+            <h2>${slideData[slideNum-1].title}</h2>
+            <div class="content-box">
+                <p><i class="fas fa-info-circle" style="color: #C41E3A; margin-right: 10px;"></i>
+                <strong>Slide Content Preview</strong></p>
+                <p>This slide contains: ${slideData[slideNum-1].title}</p>
+                <p>To view the full formatted content, the original HTML slide files should be placed in the appropriate directory structure.</p>
+                <div class="note">
+                    <p><strong><i class="fas fa-lightbulb" style="margin-right: 8px;"></i>Implementation Note:</strong>
+                    The individual slide HTML files can be loaded into this iframe for full viewing, or you can open them separately. This navigation interface provides the presentation flow and tracking.</p>
+                </div>
+            </div>
+        </div>
+        </body></html>
+    `;
+
+    frame.srcdoc = slideContent;
+}
+
+function updateNavigation() {
+    document.getElementById('currentSlide').textContent = currentSlideIndex;
+    document.getElementById('prevBtn').disabled = currentSlideIndex === 1;
+    document.getElementById('nextBtn').disabled = currentSlideIndex === totalSlides;
+}
+
+function updateProgress() {
+    const progress = (currentSlideIndex / totalSlides) * 100;
+    document.getElementById('progressBar').style.width = progress + '%';
+}
+
+function toggleMenu() {
+    document.getElementById('slideMenu').classList.toggle('active');
+    document.getElementById('menuOverlay').classList.toggle('active');
+}
+
+function toggleFullscreen() {
+    if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+    } else {
+        document.exitFullscreen();
+    }
+}
+
+// Keyboard navigation
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+        changeSlide(-1);
+    } else if (event.key === 'ArrowRight' || event.key === 'ArrowDown' || event.key === ' ') {
+        event.preventDefault();
+        changeSlide(1);
+    } else if (event.key === 'Escape') {
+        if (document.getElementById('slideMenu').classList.contains('active')) {
+            toggleMenu();
+        } else if (document.fullscreenElement) {
+            document.exitFullscreen();
+        }
+    } else if (event.key === 'm' || event.key === 'M') {
+        toggleMenu();
+    } else if (event.key === 'f' || event.key === 'F') {
+        toggleFullscreen();
+    } else if (event.key === 'Home') {
+        goToSlide(1);
+    } else if (event.key === 'End') {
+        goToSlide(totalSlides);
+    }
+});
+
+// Initialize
+window.addEventListener('load', initPresentation);
+</script>
+
+</body>
+</html>

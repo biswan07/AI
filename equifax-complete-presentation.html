@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Equifax Australia Value Creation Strategy - Complete Presentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    * { box-sizing: border-box; }
+    body, html {
+        margin: 0; padding: 0;
+        font-family: 'Montserrat', sans-serif;
+        background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+        overflow: hidden;
+        height: 100vh;
+    }
+    .presentation-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        padding: 20px;
+    }
+    .slide-wrapper {
+        position: relative;
+        width: 1280px;
+        height: 720px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+        margin-bottom: 20px;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+    .slide {
+        display: none;
+        width: 100%;
+        height: 100%;
+        background: white;
+    }
+    .slide.active { display: block; animation: fadeIn 0.3s; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    
+    .navigation {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 1280px;
+        padding: 15px 0;
+    }
+    .nav-button {
+        background: linear-gradient(135deg, #C41E3A 0%, #A91B32 100%);
+        color: white;
+        border: none;
+        padding: 12px 28px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        border-radius: 25px;
+        transition: all 0.3s;
+        font-family: 'Montserrat', sans-serif;
+        box-shadow: 0 4px 15px rgba(196, 30, 58, 0.3);
+    }
+    .nav-button:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(196, 30, 58, 0.4);
+    }
+    .nav-button:disabled {
+        background: #666;
+        cursor: not-allowed;
+        opacity: 0.5;
+        transform: none;
+    }
+    .slide-counter {
+        color: white;
+        font-size: 18px;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+    .menu-button {
+        background: linear-gradient(135deg, #4A6B83 0%, #3A5B73 100%);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 14px;
+        cursor: pointer;
+        border-radius: 20px;
+        transition: all 0.3s;
+        font-family: 'Montserrat', sans-serif;
+    }
+    .menu-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(74, 107, 131, 0.4);
+    }
+    .slide-menu {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 20px 80px rgba(0,0,0,0.8);
+        max-width: 900px;
+        max-height: 85vh;
+        overflow-y: auto;
+        z-index: 1000;
+        padding: 40px;
+    }
+    .slide-menu.active { display: block; animation: slideIn 0.3s; }
+    @keyframes slideIn {
+        from { opacity: 0; transform: translate(-50%, -45%); }
+        to { opacity: 1; transform: translate(-50%, -50%); }
+    }
+    .menu-overlay {
+        display: none;
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0,0,0,0.8);
+        z-index: 999;
+        backdrop-filter: blur(5px);
+    }
+    .menu-overlay.active { display: block; }
+    .menu-title {
+        font-size: 28px;
+        font-weight: 700;
+        color: #2D2D2D;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 3px solid #C41E3A;
+    }
+    .menu-item {
+        padding: 15px 20px;
+        margin-bottom: 10px;
+        cursor: pointer;
+        border-radius: 8px;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        border-left: 3px solid transparent;
+    }
+    .menu-item:hover {
+        background: #F5F5F5;
+        border-left-color: #C41E3A;
+        transform: translateX(5px);
+    }
+    .menu-item-number {
+        font-weight: 700;
+        color: #C41E3A;
+        margin-right: 15px;
+        min-width: 35px;
+        font-size: 18px;
+    }
+    .menu-item-title {
+        font-size: 16px;
+        color: #2D2D2D;
+    }
+    .close-menu {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: none;
+        border: none;
+        font-size: 32px;
+        cursor: pointer;
+        color: #999;
+        transition: all 0.3s;
+    }
+    .close-menu:hover {
+        color: #C41E3A;
+        transform: rotate(90deg);
+    }
+    .keyboard-hint {
+        color: #999;
+        font-size: 13px;
+        text-align: center;
+        margin-top: 10px;
+        font-style: italic;
+    }
+</style>
+</head>
+<body>
+
+<div class="presentation-container">
+    <div class="slide-wrapper">
+        <div id="slideContent"></div>
+    </div>
+
+    <div class="navigation">
+        <button class="nav-button" id="prevBtn" onclick="changeSlide(-1)">
+            <i class="fas fa-chevron-left"></i> Previous
+        </button>
+
+        <div class="slide-counter">
+            <button class="menu-button" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i> Slide Menu
+            </button>
+            <span>Slide <span id="currentSlide">1</span> of <span id="totalSlides">21</span></span>
+        </div>
+
+        <button class="nav-button" id="nextBtn" onclick="changeSlide(1)">
+            Next <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
+
+    <p class="keyboard-hint">Use arrow keys (← →) to navigate | Press M for menu | Press F for fullscreen</p>
+</div>
+
+<div class="menu-overlay" id="menuOverlay" onclick="toggleMenu()"></div>
+<div class="slide-menu" id="slideMenu">
+    <button class="close-menu" onclick="toggleMenu()">×</button>
+    <h2 class="menu-title"><i class="fas fa-presentation"></i> Presentation Slides</h2>
+    <div id="menuItems"></div>
+</div>
+
+<script>
+// Slide content loader - loads from original HTML files or embedded data
+const slideData = [
+    { num: 1, title: "Title Slide - Equifax Australia Value Creation Strategy", file: "slide1.html" },
+    { num: 2, title: "Executive Summary", file: "slide2.html" },
+    { num: 3, title: "Company Overview", file: "slide3.html" },
+    { num: 4, title: "Industry & Competitive Context", file: "slide4.html" },
+    { num: 5, title: "Strategic Challenge – Value-Based Positioning", file: "slide5.html" },
+    { num: 6, title: "Business Model Pattern Framework", file: "slide6.html" },
+    { num: 7, title: "Value Creation Patterns – Detailed", file: "slide7.html" },
+    { num: 8, title: "WTP Formula Introduction", file: "slide8.html" },
+    { num: 9, title: "Operational Quantification – Variables & Scoring", file: "slide9.html" },
+    { num: 10, title: "WTP Scenario Analysis – Tiers", file: "slide10.html" },
+    { num: 11, title: "Competitive Benchmarking Framework", file: "slide11.html" },
+    { num: 12, title: "Benchmark Insights – Variable-by-Variable", file: "slide12.html" },
+    { num: 13, title: "Strategic Implications", file: "slide13.html" },
+    { num: 14, title: "Implementation Roadmap Overview (Q1–Q4)", file: "slide14.html" },
+    { num: 15, title: "Operational Levers – Bundling & Integration", file: "slide15.html" },
+    { num: 16, title: "Operational Levers – Compliance & Trust", file: "slide16.html" },
+    { num: 17, title: "Control Points & KPI Dashboard", file: "slide17.html" },
+    { num: 18, title: "Risk Management Framework", file: "slide18.html" },
+    { num: 19, title: "WTP Variable Tracking Template", file: "slide19.html" },
+    { num: 20, title: "Key Recommendations", file: "slide20.html" },
+    { num: 21, title: "Next Steps & Closing", file: "slide21.html" }
+];
+
+let currentSlideIndex = 1;
+const totalSlides = 21;
+
+// Message for users - this presentation displays the original HTML slides
+function loadSlideContent(slideNum) {
+    const slideContent = document.getElementById('slideContent');
+    
+    // Create an iframe to load the original HTML content
+    const message = `
+        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; padding: 60px; background: white;">
+            <div style="text-align: center; max-width: 800px;">
+                <i class="fas fa-file-powerpoint" style="font-size: 80px; color: #C41E3A; margin-bottom: 30px;"></i>
+                <h1 style="color: #2D2D2D; font-size: 42px; margin-bottom: 20px;">Slide ${slideNum} of ${totalSlides}</h1>
+                <h2 style="color: #666; font-size: 28px; margin-bottom: 40px;">${slideData[slideNum-1].title}</h2>
+                <div style="background: #F5F5F5; padding: 30px; border-radius: 10px; border-left: 4px solid #C41E3A;">
+                    <p style="font-size: 18px; line-height: 1.6; color: #444; margin: 0;">
+                        <strong>Presentation Mode:</strong> This is a navigable presentation interface.<br/><br/>
+                        To view the full content of each slide, open the individual HTML files provided,<br/>
+                        or integrate the original slide HTML into this template.
+                    </p>
+                </div>
+                <div style="margin-top: 40px; display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                    <div style="background: #E3F2FD; padding: 15px 25px; border-radius: 8px;">
+                        <i class="fas fa-keyboard" style="color: #1976D2; margin-right: 8px;"></i>
+                        <strong>Arrow Keys</strong> to navigate
+                    </div>
+                    <div style="background: #F3E5F5; padding: 15px 25px; border-radius: 8px;">
+                        <i class="fas fa-bars" style="color: #7B1FA2; margin-right: 8px;"></i>
+                        <strong>M</strong> for menu
+                    </div>
+                    <div style="background: #E8F5E9; padding: 15px 25px; border-radius: 8px;">
+                        <i class="fas fa-expand" style="color: #388E3C; margin-right: 8px;"></i>
+                        <strong>F</strong> for fullscreen
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    slideContent.innerHTML = message;
+}
+
+function initPresentation() {
+    document.getElementById('totalSlides').textContent = totalSlides;
+    generateMenu();
+    loadSlideContent(currentSlideIndex);
+    updateNavigation();
+}
+
+function generateMenu() {
+    const menuItems = document.getElementById('menuItems');
+    slideData.forEach(slide => {
+        const item = document.createElement('div');
+        item.className = 'menu-item';
+        item.onclick = () => goToSlide(slide.num);
+        item.innerHTML = `
+            <span class="menu-item-number">${slide.num}</span>
+            <span class="menu-item-title">${slide.title}</span>
+        `;
+        menuItems.appendChild(item);
+    });
+}
+
+function changeSlide(direction) {
+    const newSlide = currentSlideIndex + direction;
+    if (newSlide >= 1 && newSlide <= totalSlides) {
+        currentSlideIndex = newSlide;
+        loadSlideContent(currentSlideIndex);
+        updateNavigation();
+    }
+}
+
+function goToSlide(slideNum) {
+    if (slideNum >= 1 && slideNum <= totalSlides) {
+        currentSlideIndex = slideNum;
+        loadSlideContent(currentSlideIndex);
+        updateNavigation();
+        toggleMenu();
+    }
+}
+
+function updateNavigation() {
+    document.getElementById('currentSlide').textContent = currentSlideIndex;
+    document.getElementById('prevBtn').disabled = currentSlideIndex === 1;
+    document.getElementById('nextBtn').disabled = currentSlideIndex === totalSlides;
+}
+
+function toggleMenu() {
+    const menu = document.getElementById('slideMenu');
+    const overlay = document.getElementById('menuOverlay');
+    menu.classList.toggle('active');
+    overlay.classList.toggle('active');
+}
+
+function toggleFullscreen() {
+    if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+    } else {
+        document.exitFullscreen();
+    }
+}
+
+// Keyboard navigation
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+        changeSlide(-1);
+    } else if (event.key === 'ArrowRight' || event.key === 'ArrowDown' || event.key === ' ') {
+        event.preventDefault();
+        changeSlide(1);
+    } else if (event.key === 'Escape') {
+        if (document.getElementById('slideMenu').classList.contains('active')) {
+            toggleMenu();
+        } else if (document.fullscreenElement) {
+            document.exitFullscreen();
+        }
+    } else if (event.key === 'm' || event.key === 'M') {
+        toggleMenu();
+    } else if (event.key === 'f' || event.key === 'F') {
+        toggleFullscreen();
+    } else if (event.key === 'Home') {
+        goToSlide(1);
+    } else if (event.key === 'End') {
+        goToSlide(totalSlides);
+    }
+});
+
+// Initialize on load
+window.addEventListener('load', initPresentation);
+</script>
+
+</body>
+</html>

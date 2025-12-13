@@ -115,19 +115,24 @@ def parse_csv(file_content):
 def parse_pdf(file_content):
     """
     Parse PDF file and extract expense data.
-    This is a basic implementation - may need customization for specific bank formats.
+    Supports standard numeric dates and Amex-style "Month DD" dates.
     """
     try:
         pdf_reader = PyPDF2.PdfReader(io.BytesIO(file_content))
         text = ""
 
         for page in pdf_reader.pages:
-            text += page.extract_text()
+            text += page.extract_text() + "\n"
 
-        # Basic pattern matching for transactions
-        # Pattern: Date Description Amount
-        # This is a simplified version - real credit card statements vary widely
         expenses = []
+        
+        # specific year finding logic
+        # Look for "Statement Period" or just "202X" in the first chunk of text to guess the year
+        # This is important for "Month DD" formats that don't have the year
+        year_ctx = datetime.now().year
+        year_match = re.search(r'\b20[2-3]\d\b', text[:1000]) # Look in first 1000 chars
+        if year_match:
+            year_ctx = int(year_match.group(0))
 
         lines = text.split('\n')
         for line in lines:
@@ -135,26 +140,68 @@ def parse_pdf(file_content):
             if not line:
                 continue
 
-            # Try to find date pattern at the beginning
-            date_match = re.match(r'(\d{1,2}[/-]\d{1,2}[/-]\d{2,4})', line)
-            if date_match:
-                date_str = date_match.group(1)
-                remaining = line[len(date_str):].strip()
+            # 1. Try standard numeric date pattern (DD/MM/YYYY or similar)
+            date_match_numeric = re.match(r'(\d{1,2}[/-]\d{1,2}[/-]\d{2,4})', line)
+            
+            # 2. Try Month Name DD pattern (e.g. "September 17")
+            # Matches: Start of line, Month name (3+ chars), space, 1-2 digits, space...
+            date_match_text = re.match(r'([A-Za-z]{3,}\s+\d{1,2})\s+', line)
 
-                # Try to find amount at the end
+            if date_match_numeric:
+                date_str = date_match_numeric.group(1)
+                remaining = line[len(date_str):].strip()
+                processed_date = parse_date(date_str)
+                
+                # Extract amount and description
                 amount_match = re.search(r'[\$£€¥]?\s*([\d,]+\.\d{2})\s*$', remaining)
                 if amount_match:
                     amount_str = amount_match.group(1)
                     description = remaining[:remaining.rfind(amount_str)].strip()
-
                     if description:
-                        expense = {
-                            'date': parse_date(date_str),
+                        expenses.append({
+                            'date': processed_date,
                             'description': description,
                             'credit': 0.0,
                             'debit': clean_amount(amount_str)
-                        }
-                        expenses.append(expense)
+                        })
+
+            elif date_match_text:
+                raw_date_part = date_match_text.group(1) # e.g. "September 17"
+                # Construct a full date string with the found year
+                date_str_with_year = f"{raw_date_part} {year_ctx}"
+                
+                remaining = line[len(raw_date_part):].strip()
+                
+                # Extract amount and description (same logic)
+                amount_match = re.search(r'[\$£€¥]?\s*([\d,]+\.\d{2})\s*$', remaining)
+                
+                # For Amex, sometimes there are extra columns or codes before the amount
+                # The line format is usually: Date Description content... Amount
+                
+                if amount_match:
+                    amount_str = amount_match.group(1)
+                    # Amount match finds the LAST amount at the end of the line
+                    
+                    description = remaining[:remaining.rfind(amount_str)].strip()
+                    
+                    # Clean up description (sometimes has extra location data or codes at the end)
+                    # For now, keep it simple.
+                    
+                    if description:
+                         # Attempt to parse the date
+                        try:
+                            parsed_date_obj = datetime.strptime(date_str_with_year, '%B %d %Y')
+                            processed_date = parsed_date_obj.strftime('%Y-%m-%d')
+                            
+                            expenses.append({
+                                'date': processed_date,
+                                'description': description,
+                                'credit': 0.0,
+                                'debit': clean_amount(amount_str)
+                            })
+                        except ValueError:
+                            # Not a valid date format, skip
+                            continue
 
         if not expenses:
             raise ValueError("Could not extract expense data from PDF. The format may not be supported.")
